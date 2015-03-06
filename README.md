@@ -9,7 +9,10 @@ Provides insight about the rivers in your Elasticsearch cluster.
 ### Supported rivers ###
 
 Elasticsearch JDBC River (forked) [https://github.com/msimons/elasticsearch-river-jdbc](https://github.com/msimons/elasticsearch-river-jdbc)
- 
+
+
+![Alt text](../../../elasticsearch-riverstatus/raw/master/src/site/overview.png "Screenshot Overview")
+
 Development
 -----------
 
