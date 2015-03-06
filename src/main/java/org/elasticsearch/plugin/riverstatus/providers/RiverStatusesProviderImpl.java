@@ -46,8 +46,8 @@ public class RiverStatusesProviderImpl implements RiverStatusesProvider {
             String name = hit.getType();
             SearchHitField runningField = hit.field("hit.field");
             SearchHitField lastRunDateField = hit.field("jdbc.lastUpdate");
-            boolean running =  (runningField != null ? runningField.value() : false);
-            String lastRunDate = (lastRunDateField != null ? lastRunDateField.value() : null);
+            boolean running =  (runningField != null ? (Boolean) runningField.value() : false);
+            String lastRunDate = (lastRunDateField != null ? (String) lastRunDateField.value() : null);
 
             RiverStatus status = new RiverStatus();
             status.setName(name);
@@ -84,18 +84,18 @@ public class RiverStatusesProviderImpl implements RiverStatusesProvider {
             String name = hit.getType();
             if(map.containsKey(name)) {
                 RiverStatus status = map.get(name);
-                status.setStrategy(hit.field("jdbc.strategy").getValue());
+                status.setStrategy((String) hit.field("jdbc.strategy").getValue());
 
                 SearchHitField jdbcPoll = hit.field("jdbc.poll");
                 if(jdbcPoll != null) {
-                    status.setPoll(jdbcPoll.getValue());
+                    status.setPoll((String) jdbcPoll.getValue());
                 }
                 status.setStatus(getStatus(status.getLastRunDate(), status.getPoll(), status.isRunning()));
 
                 SearchHitField indexName = hit.field("index.index");
                 SearchHitField indexType = hit.field("index.type");
 
-                status.setIndex(new Index(indexName.getValue(),indexType.getValue()));
+                status.setIndex(new Index((String)indexName.getValue(),(String)indexType.getValue()));
             }
         }
 

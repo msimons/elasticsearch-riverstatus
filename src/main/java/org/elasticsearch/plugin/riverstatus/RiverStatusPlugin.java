@@ -5,8 +5,9 @@ import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.inject.Module;
 import org.elasticsearch.plugins.AbstractPlugin;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class RiverStatusPlugin extends AbstractPlugin {
 
@@ -28,6 +29,8 @@ public class RiverStatusPlugin extends AbstractPlugin {
 
     @Override
     public Collection<Class<? extends Module>> modules() {
-        return Arrays.asList(RiverStatusModule.class);
+        List<Class> modules = new ArrayList<>();
+        modules.add(RiverStatusModule.class);
+        return (Collection) modules;
     }
 }
