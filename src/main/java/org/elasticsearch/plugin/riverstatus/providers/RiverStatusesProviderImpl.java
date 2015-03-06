@@ -17,27 +17,26 @@ import org.elasticsearch.search.SearchHitField;
 
 import java.util.*;
 
-public class RiverStatusProvider {
+public class RiverStatusesProviderImpl implements RiverStatusesProvider {
 
     private static final int MAX_SIZE = 1000;
     private Client client;
 
-    public RiverStatusProvider (Client client) {
+    public RiverStatusesProviderImpl(Client client) {
         this.client = client;
     }
 
-    public RiverStatusResponse getRiverInfo() {
+    @Override
+    public RiverStatuses getRiverStatuses() {
 
-        RiverStatusResponse riverStatusResponse = new RiverStatusResponse();
-       // riverInfo.setHost(host);
-       // riverInfo.setPort(port);
-        List<RiverStatus> riverStatus = getRiverStatus();
-        riverStatusResponse.setRivers(riverStatus);
+        RiverStatuses status = new RiverStatuses();
+        List<RiverStatus> riverStatus = internalStatus();
+        status.setRivers(riverStatus);
 
-        return riverStatusResponse;
+        return status;
     }
 
-    public List<RiverStatus> getRiverStatus() {
+    public List<RiverStatus> internalStatus() {
         BaseQueryBuilder query = QueryBuilders.idsQuery().ids("_runstatus");
         SearchRequestBuilder builder = client.prepareSearch("_river").setSearchType(SearchType.QUERY_THEN_FETCH).setSize(MAX_SIZE).addFields("_type","jdbc.running", "jdbc.lastUpdate").setQuery(query);
         SearchResponse searchResponse = builder.execute().actionGet();
@@ -85,25 +84,25 @@ public class RiverStatusProvider {
             String name = hit.getType();
             if(map.containsKey(name)) {
                 RiverStatus status = map.get(name);
-                status.setStrategy((String)hit.field("jdbc.strategy").getValue());
+                status.setStrategy(hit.field("jdbc.strategy").getValue());
 
                 SearchHitField jdbcPoll = hit.field("jdbc.poll");
                 if(jdbcPoll != null) {
-                    status.setPoll((String)jdbcPoll.getValue());
+                    status.setPoll(jdbcPoll.getValue());
                 }
-                status.setStatus(getStatus(name, status.getLastRunDate(), status.getPoll(), status.isRunning()));
+                status.setStatus(getStatus(status.getLastRunDate(), status.getPoll(), status.isRunning()));
 
                 SearchHitField indexName = hit.field("index.index");
                 SearchHitField indexType = hit.field("index.type");
 
-                status.setIndex(new Index((String)indexName.getValue(),(String)indexType.getValue()));
+                status.setIndex(new Index(indexName.getValue(),indexType.getValue()));
             }
         }
 
         return new ArrayList<>(map.values());
     }
 
-    public Status getStatus(String name, String lastRunDate, String poll, boolean running) {
+    public Status getStatus(String lastRunDate, String poll, boolean running) {
 
         if(StringUtils.isBlank(lastRunDate)) {
             if(running) {
@@ -163,6 +162,8 @@ public class RiverStatusProvider {
         return false;
     }
 
-
-
+    @Override
+    public boolean supports(River river) {
+        return river.equals(River.JDBC_RIVER);
+    }
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class RiverStatusResponse {
+public class RiverStatuses {
     private List<RiverStatus> rivers;
 
     /**
