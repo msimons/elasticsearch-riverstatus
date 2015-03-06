@@ -16,7 +16,7 @@ public class RiverStatusesProviderFactory {
 
     public RiverStatusesProviderFactory(Client client) {
         this.client = client;
-        providers.add(new RiverStatusesProviderImpl(client));
+        providers.add(new JDBCRiverStatusesProvider(client));
     }
 
     public RiverStatusesProvider getProvider(){

@@ -17,12 +17,12 @@ import org.elasticsearch.search.SearchHitField;
 
 import java.util.*;
 
-public class RiverStatusesProviderImpl implements RiverStatusesProvider {
+public class JDBCRiverStatusesProvider implements RiverStatusesProvider {
 
     private static final int MAX_SIZE = 1000;
     private Client client;
 
-    public RiverStatusesProviderImpl(Client client) {
+    public JDBCRiverStatusesProvider(Client client) {
         this.client = client;
     }
 
