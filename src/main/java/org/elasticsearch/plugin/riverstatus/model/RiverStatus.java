@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(of = "name")
 public class RiverStatus {
     private String name;
-    private String strategy;
+    private String type;
     private String poll;
     private boolean running;
     private Status status;

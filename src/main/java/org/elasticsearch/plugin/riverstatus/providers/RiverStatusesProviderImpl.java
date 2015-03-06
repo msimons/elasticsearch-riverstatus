@@ -44,7 +44,7 @@ public class RiverStatusesProviderImpl implements RiverStatusesProvider {
         Map<String,RiverStatus> map = new HashMap<>();
         for(SearchHit hit : searchResponse.getHits()) {
             String name = hit.getType();
-            SearchHitField runningField = hit.field("hit.field");
+            SearchHitField runningField = hit.field("jdbc.running");
             SearchHitField lastRunDateField = hit.field("jdbc.lastUpdate");
             boolean running =  (runningField != null ? (Boolean) runningField.value() : false);
             String lastRunDate = (lastRunDateField != null ? (String) lastRunDateField.value() : null);
@@ -84,7 +84,7 @@ public class RiverStatusesProviderImpl implements RiverStatusesProvider {
             String name = hit.getType();
             if(map.containsKey(name)) {
                 RiverStatus status = map.get(name);
-                status.setStrategy((String) hit.field("jdbc.strategy").getValue());
+                status.setType(River.JDBC_RIVER.getName() + ":" + hit.field("jdbc.strategy").getValue());
 
                 SearchHitField jdbcPoll = hit.field("jdbc.poll");
                 if(jdbcPoll != null) {
