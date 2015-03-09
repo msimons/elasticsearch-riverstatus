@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </td>
-            <td style="width:15%">{{river.lastRunDate}}</td>
+            <td style="width:15%">{{ river.lastRunDate | relativeDate }}</td>
             <td style="width: 25%">
                 <a class="btn btn-default btn-sm" target="_blank" ng-href="/_river/{{river.name}}/_search">Config</a>
                 <a class="btn btn-default btn-sm" target="_blank" ng-href="/{{river.index.name}}/_mapping">Mapping</a>

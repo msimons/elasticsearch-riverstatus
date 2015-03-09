@@ -1,6 +1,7 @@
-var riverApp = angular.module("riverApp", ['ngRoute','ngResource','angular-lodash']);
+var riverApp = angular.module("riverApp", ['ngRoute','ngResource','angular-lodash','relativeDate']);
 
 //Do configuration and routing here
+
 riverApp.config(function($routeProvider){
     console.log($routeProvider);
     $routeProvider
