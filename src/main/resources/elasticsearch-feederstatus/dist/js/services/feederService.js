@@ -1,9 +1,9 @@
-riverApp.factory("riverService", function($http){
+app.factory("feederService", function($http){
 
     return {
 
-        getRiverInfo: function() {
-            return $http.get("/_riverstatus/info").then(
+        getFeederInfo: function() {
+            return $http.get("/_feederstatus/info").then(
                 //Success
                 function(response){
                     return response.data;

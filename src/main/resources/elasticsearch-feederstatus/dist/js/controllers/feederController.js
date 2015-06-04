@@ -1,9 +1,9 @@
-riverApp.controller("riverController", function ($scope,riverService){
+app.controller("feederController", function ($scope,feederService){
 
     var updateFunction = function() {
-        riverService.getRiverInfo().then(
+        feederService.getFeederInfo().then(
             function(data) {
-                $scope.riverinfo = data;
+                $scope.feeders = data;
                 _.delay(updateFunction,5000);
             }
         );

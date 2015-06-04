@@ -1,4 +1,4 @@
-package org.elasticsearch.plugin.riverstatus;
+package org.elasticsearch.plugin.feederstatus;
 
 
 import org.elasticsearch.common.inject.Inject;
@@ -9,28 +9,28 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class RiverStatusPlugin extends AbstractPlugin {
+public class FeederStatusPlugin extends AbstractPlugin {
 
-    public final static String PATH_NAME = "_riverstatus";
+    public final static String PATH_NAME = "_feederstatus";
 
     @Inject
-    public RiverStatusPlugin() {
+    public FeederStatusPlugin() {
     }
 
     @Override
     public String name() {
-        return "riverstatus";
+        return "feederstatus";
     }
 
     @Override
     public String description() {
-        return "River Status";
+        return "Feeder Status";
     }
 
     @Override
     public Collection<Class<? extends Module>> modules() {
         List<Class> modules = new ArrayList<>();
-        modules.add(RiverStatusModule.class);
+        modules.add(FeederStatusModule.class);
         return (Collection) modules;
     }
 }

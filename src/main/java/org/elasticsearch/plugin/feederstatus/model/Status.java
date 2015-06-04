@@ -1,4 +1,4 @@
-package org.elasticsearch.plugin.riverstatus.model;
+package org.elasticsearch.plugin.feederstatus.model;
 
 
 import lombok.AllArgsConstructor;
@@ -10,13 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "name")
-public class RiverStatus {
+public class Status {
     private String name;
-    private String type;
-    private String poll;
-    private boolean running;
-    private Status status;
+    private StatusType status;
     private String lastRunDate;
-    private Node node;
-    private Index index;
 }

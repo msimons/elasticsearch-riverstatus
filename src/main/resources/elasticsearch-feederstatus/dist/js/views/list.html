@@ -1,49 +1,42 @@
 <div>
-    <h1>RiverStatus</h1>
+    <h1>Feeder Status</h1>
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Name</th>
-            <th>Type</th>
-            <th>Interval</th>
             <th>Status</th>
             <th>Last run</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="river in riverinfo.rivers | orderBy:'name'" style="height:10px;">
-            <td style="width: 20%">{{river.name}}</td>
-            <td style="width: 10%">{{river.type}}</td>
-            <td style="width:7.5%">{{ river.poll }}</td>
-            <td style="width: 30%" ng-switch on="river.status">
+        <tr ng-repeat="feeder in feeders.statuses | orderBy:'name'" style="height:10px;">
+            <td style="width: 20%">{{feeder.name}}</td>
+            <td style="width: 30%" ng-switch on="feeder.status">
                 <div class="progress progress-striped active" ng-switch-when="RUNNING">
                     <div title="Running" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                        <i>Running on {{river.node.name}}</i>
+                        <i>Running on {{feeder.node.name}}</i>
                     </div>
                 </div>
                 <div class="progress" ng-switch-when="IDLE">
                     <div title="Idle" class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                        <i>Idle on {{river.node.name}}</i>
+                        <i>Idle on {{feeder.node.name}}</i>
                     </div>
                 </div>
                 <div class="progress" ng-switch-when="BROKEN">
                     <div title="Idle" class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                        <i>Broken on {{river.node.name}}</i>
+                        <i>Broken on {{feeder.node.name}}</i>
                     </div>
                 </div>
 
                 <div class="progress progress-striped active" ng-switch-when="DELAYED">
                     <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                        <i>Delayed on {{river.node.name}}</i>
+                        <i>Delayed on {{feeder.node.name}}</i>
                     </div>
                 </div>
             </td>
-            <td style="width:7.5%">{{ river.lastRunDate | relativeDate }}</td>
+            <td style="width:7.5%">{{ feeder.lastRunDate | relativeDate }}</td>
             <td style="width: 25%">
-                <a class="btn btn-default btn-sm" target="_blank" ng-href="/_river/{{river.name}}/_search">Config</a>
-                <a class="btn btn-default btn-sm" target="_blank" ng-href="/{{river.index.name}}/_mapping">Mapping</a>
-                <a class="btn btn-default btn-sm" target="_blank" ng-href="/{{river.index.name}}/{{river.index.type}}/_search">Index</a>
             </td>
         </tr>
         </tbody>

@@ -1,4 +1,4 @@
-package org.elasticsearch.plugin.riverstatus.providers;
+package org.elasticsearch.plugin.feederstatus.providers;
 
 import org.elasticsearch.action.admin.cluster.node.info.NodeInfo;
 import org.elasticsearch.action.admin.cluster.node.info.NodesInfoRequest;
@@ -9,20 +9,20 @@ import org.elasticsearch.client.Client;
 import java.util.*;
 
 
-public class RiverStatusesProviderFactory {
+public class StatusesProviderFactory {
 
     private Client client;
-    private List<RiverStatusesProvider> providers = new ArrayList<>();
+    private List<StatusesProvider> providers = new ArrayList<>();
 
-    public RiverStatusesProviderFactory(Client client) {
+    public StatusesProviderFactory(Client client) {
         this.client = client;
-        providers.add(new JDBCRiverStatusesProvider(client));
+        providers.add(new JdbcFeederStatusesProvider(client));
     }
 
-    public RiverStatusesProvider getProvider(){
-        Set<RiverStatusesProvider> selected = new HashSet<>();
-        for(River river : current()) {
-            for(RiverStatusesProvider provider : providers) {
+    public StatusesProvider getProvider(){
+        Set<StatusesProvider> selected = new HashSet<>();
+        for(Feeder river : current()) {
+            for(StatusesProvider provider : providers) {
                 if(!provider.supports(river)){
                     continue;
                 }
@@ -36,18 +36,21 @@ public class RiverStatusesProviderFactory {
         }
 
         if(selected.size() > 1) {
-            return new RiverStatusesProviderAggregator(selected);
+            return new StatusesProviderAggregator(selected);
         }
 
         return selected.iterator().next();
     }
 
-    private Collection<River> current() {
-        Set<River> result = new HashSet<>();
+    private Collection<Feeder> current() {
+        Set<Feeder> result = new HashSet<>();
         NodesInfoResponse nodesInfo = client.admin().cluster().nodesInfo(new NodesInfoRequest().clear().plugins(true)).actionGet();
         for(NodeInfo nodeInfo : nodesInfo.getNodes()) {
             for(PluginInfo pluginInfo : nodeInfo.getPlugins().getInfos()){
-                    River river = River.valueByName(pluginInfo.getName());
+                    Feeder river = Feeder.valueByName(pluginInfo.getName());
+                    if(river == null) {
+                        river = Feeder.valueByName(pluginInfo.getDescription());
+                    }
                     if(river != null){
                         result.add(river);
                     }

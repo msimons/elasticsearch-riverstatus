@@ -1,4 +1,4 @@
-package org.elasticsearch.plugin.riverstatus.model;
+package org.elasticsearch.plugin.feederstatus.model;
 
 
 import com.google.gson.GsonBuilder;
@@ -7,8 +7,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class RiverStatuses {
-    private List<RiverStatus> rivers;
+public class Statuses {
+    private List<Status> statuses;
 
     /**
      * Returns a valid JSON representation of the model, according to the Swagger schema.

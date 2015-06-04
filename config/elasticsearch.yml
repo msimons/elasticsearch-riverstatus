@@ -213,7 +213,7 @@ path.plugins:  target/elasticsearch/plugins
 
 # Set a custom port for the node to node communication (9300 by default):
 #
-#transport.tcp.port: 9300
+transport.tcp.port: 9305
 
 # Enable compression for all communication between nodes (disabled by default):
 #
@@ -221,7 +221,7 @@ path.plugins:  target/elasticsearch/plugins
 
 # Set a custom port to listen for HTTP traffic:
 #
-http.port: 9200
+http.port: 9205
 
 # Set a custom allowed content length:
 #
