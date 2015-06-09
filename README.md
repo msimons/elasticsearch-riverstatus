@@ -30,7 +30,7 @@ Installation
 *This plugin is currently in development, no releases have been published yet. If you would like to install the plugin manually, you can do so by getting the build release package (see Development) and run the following command from within your Elasticsearch folder:*
 
 ```shell
-./bin/plugin --u file:///path/to/plugin.zip --i elasticsearch-feederstatus
+./bin/plugin -u file:///path/to/plugin.zip -i elasticsearch-feederstatus
 ```
 
 
