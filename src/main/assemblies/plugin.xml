@@ -17,8 +17,8 @@
     </dependencySets>
     <fileSets>
         <fileSet>
-            <directory>${basedir}/src/main/resources/elasticsearch-riverstatus/dist</directory>
-            <outputDirectory>/_site</outputDirectory>
+            <directory>${basedir}/target/dist/</directory>
+            <outputDirectory>/</outputDirectory>
             <includes>
                 <include>**/*.*</include>
             </includes>
